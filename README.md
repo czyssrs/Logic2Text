@@ -31,13 +31,17 @@ The pre-trained GPT-2 can be downloaded via [Dropbox](https://www.dropbox.com/sh
 
 ### data pre-process
 In addition to the original data folder, this script will create another folder to contain the preprocessed data, which will be used for train and test.
-
+```
 python preprocess.py data_folder GPT_folder
+```
 
 ### train
 Modify the data paths and parameters in the Main.py file. Then run:
-
+```
 CUDA_VISIBLE_DEVICES=0,1 python Main.py --mode train
+```
 
 ### test
+```
 CUDA_VISIBLE_DEVICES=0,1 python Main.py --mode test --saved_model_path load_model_path
+```
