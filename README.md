@@ -29,6 +29,11 @@ This site is under construction, and we will release other codes in the future.
 ## Model
 The pre-trained GPT-2 can be downloaded via [Dropbox](https://www.dropbox.com/sh/99awpjnj2lh4e17/AACCz_XU_FhkinSId0_nz1-qa?dl=0).
 
+### requirements
+python 3.6
+
+tensorflow 1.12
+
 ### data pre-process
 In addition to the original data folder, this script will create another folder to contain the preprocessed data, which will be used for train and test.
 ```
