@@ -52,3 +52,8 @@ CUDA_VISIBLE_DEVICES=0,1 python Main.py --mode test --saved_model_path load_mode
 
 ## AMT annotation interface
 In the folder amt, we have all the html scripts for AMT annotations. 
+```
+folder composition: html files for statements composition
+folder logic_form: html files for logic form annotation
+folder quality_check: html files for checking logic form annotation quality
+```
