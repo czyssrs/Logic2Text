@@ -31,7 +31,6 @@ The pre-trained GPT-2 can be downloaded via [Dropbox](https://www.dropbox.com/sh
 
 ### requirements
 python 3.6
-
 tensorflow 1.12
 
 ### data pre-process
@@ -50,3 +49,6 @@ CUDA_VISIBLE_DEVICES=0,1 python Main.py --mode train
 ```
 CUDA_VISIBLE_DEVICES=0,1 python Main.py --mode test --saved_model_path load_model_path
 ```
+
+## AMT annotation interface
+In the folder amt, we have all the html scripts for AMT annotations. 
