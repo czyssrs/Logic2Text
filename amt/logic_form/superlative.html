@@ -1,0 +1,327 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+    
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<section class="container" id="Survey"><!-- Instructions -->
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="panel panel-primary">
+
+<a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Survey Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+
+<div class="panel-body" id="instructionBody">
+    <p> <strong>You are given a table with its title and its wikipedia source, and a <strong>statement about describing the superlative object in a table column</strong>, your job is to annotate the semantic meaning of this statement following six steps: </strong><br>
+
+<br>
+    1. Is the superlative action performed on the scope of all table rows, or on a subset of all rows? <br>
+    2. What is the table column that the superlative action is performed on? <br>
+    3. Is the superlative action taking the numerical maximum, or minimum value among the records? <br>
+    4. What is the table row containing this superlative value? <br>
+    5. On this row with the superlative value, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'. <br>
+    6. Is this superlative value itself mentioned in the statement? <br>
+<br>
+
+We list some examples below to help you understand. <strong>Please carefully read and study these examples before starting. </strong> <strong>We pad the table column and row numbers around the table (blue part) to help you annotate. </strong>For column and row selection, the format is the col/row numbers seperated by comma (e.g., 1,2,3). 
+</p>
+<div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/1996%E2%80%9397_Atlanta_Hawks_season">1996 - 97 atlanta hawks season</a> </div>
+
+<div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><td id="HEADER"></td><td id="HEADER">1</td><td id="HEADER">2</td><td id="HEADER">3</td><td id="HEADER">4</td><td id="HEADER">5</td><td id="HEADER">6</td></tr>
+              <tr><td id="HEADER"></td><th>game</th><th>date</th><th>opponent</th><th>score</th><th>location</th><th>attendence</th></tr>
+              <tr><td id="HEADER">1</td><td>73</td><td>april 2</td><td>charlotte hornets</td><td>l 84 - 95</td><td>charlotte coliseum</td><td>24042</td></tr>
+              <tr><td id="HEADER">2</td><td>74</td><td>april 4</td><td>detroit pistons</td><td>w 103 - 89</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">3</td><td>75</td><td>april 5</td><td>new york knicks</td><td>l 97 - 102</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">4</td><td>76</td><td>april 9</td><td>philadelphia 76ers</td><td>w 116 - 101</td><td>corestates center</td><td>16549</td></tr>
+              <tr><td id="HEADER">5</td><td>77</td><td>april 11</td><td>indiana pacers</td><td>w 104 - 92</td><td>market square arena</td><td>16403</td></tr>
+              <tr><td id="HEADER">6</td><td>78</td><td>april 12</td><td>minnesota timberwolves</td><td>w 80 - 66</td><td>target center</td><td>18874</td></tr>
+              <tr><td id="HEADER">7</td><td>79</td><td>april 15</td><td>new jersey nets</td><td>w 109 - 101</td><td>omni coliseum</td><td>14458</td></tr>
+              <tr><td id="HEADER">8</td><td>80</td><td>april 16</td><td>new york knicks</td><td>l 92 - 96</td><td>madison square garden</td><td>19763</td></tr>
+              <tr><td id="HEADER">9</td><td>81</td><td>april 19</td><td>philadelphia 76ers</td><td>w 136 - 104</td><td>omni coliseum</td><td>16457</td></tr>
+              <tr><td id="HEADER">10</td><td>82</td><td>april 20</td><td>new jersey nets</td><td>l 92 - 108</td><td>continental airlines arena</td><td>18702</td></tr></table>
+        </div>
+
+        <div class="col-lg-6">
+            <strong>Accepted examples</strong>: <br><br>
+
+            <font color="green">Example 1</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the game on april 2 drew the highest number of fans. <br><br>
+
+            <strong>1. Is the superlative action performed on the scope of all table rows, or on a subset of all rows?</strong><br>
+            <strong>Your Answer:</strong> all rows <br>
+
+            <strong>2. What is the table column that the superlative action is performed on?</strong><br>
+            <strong>Your Answer:</strong> 6 <br>
+
+            <strong>3. Is the superlative action taking the numerical maximum, or minimum value among the records? </strong><br>
+            <strong>Your Answer:</strong> maximum <br>
+
+            <strong>4. What is the table row containing this superlative value? </strong><br>
+            <strong>Your Answer:</strong> 1 <br>
+
+            <strong>5. On this row with the superlative value, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'.</strong><br>
+            <strong>Your Answer:</strong> 2 <br>
+
+            <strong>6. Is this superlative value itself mentioned in the statement? </strong><br>
+            <strong>Your Answer:</strong> no <br><br>
+
+            ( Explain: this statement is talking about the maximum value in the "attendance" column (column 6). The highest attendance value is compared against among all rows, thus the scope is "all rows"; This maximum attendance, "24042", is on the 1st row; but the number "24042" is not presented in the statement; the statement also mentioned the date (column 2), april 2, on which this maximum attendance is achieved) <br><br>
+            <br>
+
+
+
+
+            <font color="green">Example 2</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the highest attendance is 24042. <br><br>
+
+            <strong>1. Is the superlative action performed on the scope of all table rows, or on a subset of all rows?</strong><br>
+            <strong>Your Answer:</strong> all rows <br>
+
+            <strong>2. What is the table column that the superlative action is performed on?</strong><br>
+            <strong>Your Answer:</strong> 6 <br>
+
+            <strong>3. Is the superlative action taking the numerical maximum, or minimum value among the records? </strong><br>
+            <strong>Your Answer:</strong> maximum <br>
+
+            <strong>4. What is the table row containing this superlative value? </strong><br>
+            <strong>Your Answer:</strong> 1 <br>
+
+            <strong>5. On this row with the superlative value, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'.</strong><br>
+            <strong>Your Answer:</strong> n/a <br>
+
+            <strong>6. Is this superlative value itself mentioned in the statement? </strong><br>
+            <strong>Your Answer:</strong> yes <br><br>
+
+            ( Explain: different from the 1st example, the maximum value, "24042", is mentioned in this statement; but no records in other column of this row is mentioned. ) <br><br>
+
+
+
+
+
+            <font color="green">Example 3</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the game against new jersey nets recorded the lowest attendance among the games played in omni coliseum . <br><br>
+
+            <strong>1. Is the superlative action performed on the scope of all table rows, or on a subset of all rows?</strong><br>
+            <strong>Your Answer:</strong> subset <br>
+
+            <strong>2. What is the table column that the superlative action is performed on?</strong><br>
+            <strong>Your Answer:</strong> 6 <br>
+
+            <strong>3. Is the superlative action taking the numerical maximum, or minimum value among the records? </strong><br>
+            <strong>Your Answer:</strong> minimum <br>
+
+            <strong>4. What is the table row containing this superlative value? </strong><br>
+            <strong>Your Answer:</strong> 7 <br>
+
+            <strong>5. On this row with the superlative value, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'.</strong><br>
+            <strong>Your Answer:</strong> 3 <br>
+
+            <strong>6. Is this superlative value itself mentioned in the statement? </strong><br>
+            <strong>Your Answer:</strong> no <br><br>
+
+
+            ( Explain: the scope of this superlative action is the rows whose "location" column is "omni coliseum", therefore the scope should be "subset"; ) <br><br>
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+<p>
+  <strong>NOTE: 
+    1. The maximum or minimum is based on the numerical value of table records, not the one expressed in the statement. For example, "player 1 ranked highest", then the rank of player 1 should be numerically minimum and we choose "minimum" for question 3. <br><br>
+
+    2. If there are any errors in the given statement, or the given statement cannot be interpreted using the above formula, just leave the selection slots unselected and write 'n/a' in all other slots. </strong>
+</p>
+
+
+</div>
+</div>
+
+<div class="row" id="workContent">
+<div class="col-sm-12 col-sm-offset-0">
+<div class="panel panel-default" style="width: 100%;">
+    
+<div class="panel-heading">
+    If you have not study all the above examples carefully, or feel not very clear about the task, do not start doing this task -- you will be probably rejected. <br><br>
+    First read the following table, then annotate the semantic meaning of the statement:
+</div>
+
+<div class="panel-body">
+Table Source: <a href=${wiki1}>${topic1}</a><br>
+Table title: ${topic1}
+<div id="url1">${url1}</div><br>
+<br>
+<strong>Statement: ${sent1}</strong>
+<br>
+<br>
+  <p>1. Is the superlative action performed on the scope of all table rows, or on a subset of all rows? </p>
+  <select name="scope">
+      <option value="tmp1">-- click to select --</option>
+      <option value="all">all rows</option>
+      <option value="subset">a subset of rows</option>
+      </select>
+      </p>
+  <br>
+  <p>2. What is the table column that the superlative action is performed on? </p>
+    <textarea name="col_superlative" class="form-control" rows="1" type="text" placeholder="write down column number" required></textarea><br>
+    <br>
+  <p>3. Is the superlative action taking the numerical maximum, or minimum value among the records? </p>
+  <select name="max_or_min">
+      <option value="tmp2">-- click to select --</option>
+      <option value="max">maximum</option>
+      <option value="min">minimum</option>
+      </select>
+      </p>
+  <br>
+  <p>4. What is the table row containing this superlative value? </p>
+    <textarea name="row_superlative" class="form-control" rows="1" type="text" placeholder="write down row number" required></textarea><br>
+    <br>
+  <p>5. On this row with the superlative value, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'. </p>
+    <textarea name="col_other" class="form-control" rows="1" type="text" placeholder="write down column number" required></textarea><br>
+    <br>
+  <p>6. Is this superlative value itself mentioned in the statement? </p>
+  <select name="value_mentioned">
+      <option value="tmp3">-- click to select --</option>
+      <option value="yes">yes</option>
+      <option value="no">no</option>
+      </select>
+      </p>
+  <br>
+</div>
+
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+jQuery.ajaxSetup({async:false});
+$(document).ready(function(){
+    var table_content = "";
+    var cur = $(`#url1`).text()
+    $.get(cur, function(data){
+        var nwe_data = CSV2Table(data);
+        table_content += nwe_data;
+    }, 'text').fail(function() {
+    });
+    $(`#url1`).html(table_content);
+    
+    $('a').each(function(i, val){
+    if(val.href.match(/wikipedia/g))
+        val.target="_blank";
+    else
+        val.href = "javascript:void(0)"
+    });
+
+    var tabtrigger = $('#collapseTrigger');
+    var tabcontent = $('#instructionBody');
+
+    $('.collapse-text').text('(Click to expand)');
+    tabtrigger.click(function(){
+      tabcontent.toggle();
+      var isVisible = tabcontent.is(':visible');
+      if(isVisible){
+        $('.collapse-text').text('(Click to collapse)');
+      }else{
+        $('.collapse-text').text('(Click to expand)');
+      }
+    });
+
+});
+    
+function CSV2Table(data) {
+    var lines = data.split("\n");
+    lines.pop();
+    //var headers = lines[0].split(separator);
+    var output = []
+
+    var column = "<tr><td id=\"HEADER\"></td>"
+    for (i = 0; i < lines[0].slice(0,-1).split("#").length; i++){
+      this_i = i + 1
+      column += "<td id=\"HEADER\">" + this_i + "</td>";
+    }
+    column += "</tr>"
+    output.push(column);
+
+    for (i = 0; i < lines.length; i++){
+        //var fields = lines[i].split("#");
+        // add padding
+        if(i == 0){
+            output.push("<tr><td id=\"HEADER\"></td><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        }
+        else{
+            output.push("<tr><td id=\"HEADER\">" + i + "</td><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+        }
+        // if(i == 0){
+        //     output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        // }
+        // else{
+        //     output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");            
+        // }
+    }
+    output = "<table class='wikitable'>" + output.join("") + "</table>";
+    return output
+}
+</script>
+
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" />
+<style type="text/css">#collapseTrigger{ color:#fff; display: block; text-decoration: none; } #submitButton{ white-space: normal; } .image{ margin-bottom: 15px; }
+</style>
+        <style>
+            table, tr {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: lightyellow;
+                font-size: smaller;
+            }
+
+            td#HEADER  {background-color: lightblue;}
+
+            th {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                font-size: smaller;
+            }
+            td {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: #F7F8FA;
+                font-size: smaller;
+            }
+            .panel {
+                display: inline-block;
+                background: white;
+            }
+            p {
+              display: block;
+              margin-top: 0em;
+              margin-bottom: 1em;
+              margin-left: 1em;
+              margin-right: 1em;
+            }
+</style>

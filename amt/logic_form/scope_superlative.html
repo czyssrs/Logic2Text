@@ -1,0 +1,316 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+    
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<section class="container" id="Survey"><!-- Instructions -->
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="panel panel-primary">
+
+<a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Survey Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+
+<div class="panel-body" id="instructionBody">
+    <p> You are given a table with its title and its wikipedia source, and a statement talking about the superlative object over a column in the table. <strong>The superlative action is performed over a subset of table rows, your job is to annotate this subset of rows: </strong><br>
+
+<br>
+    1. Based on which column, does the statement choose the subset? <br>
+    2. Select the criterion, based on which we filter the table records to select this subset. Here we consider the following criterion: <strong>"equal", "not equal", "less than", "less than or equal to", "greater than", "greater than or equal to", "fuzzily match", </strong>(or "other" if none of the above is correct).<br>
+    3. Based on the selected criterion in question 2, write the value to be filtered for selection of this subset; If you choose "other" for question 2, just write "n/a"<br>
+    4. Write the row numbers (separated by comma, e.g., 1,2,3) of the selected subset; <br>
+
+<br>
+
+We list some examples below to help you understand, you can open the table wikipedia link to understand the context of the table. <strong>Please carefully read and study these examples before starting. </strong> <strong>We pad the table column and row numbers around the table (blue part) to help you annotate. </strong>For column and row selection, the format is the col/row numbers seperated by comma (e.g., 1,2,3). 
+</p>
+<div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/1996%E2%80%9397_Atlanta_Hawks_season">1996 - 97 atlanta hawks season</a> </div>
+
+<div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><td id="HEADER"></td><td id="HEADER">1</td><td id="HEADER">2</td><td id="HEADER">3</td><td id="HEADER">4</td><td id="HEADER">5</td><td id="HEADER">6</td></tr>
+              <tr><td id="HEADER"></td><th>game</th><th>date</th><th>opponent</th><th>score</th><th>location</th><th>attendence</th></tr>
+              <tr><td id="HEADER">1</td><td>73</td><td>april 2</td><td>charlotte hornets</td><td>l 84 - 95</td><td>charlotte coliseum</td><td>24042</td></tr>
+              <tr><td id="HEADER">2</td><td>74</td><td>april 4</td><td>detroit pistons</td><td>w 103 - 89</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">3</td><td>75</td><td>april 5</td><td>new york knicks</td><td>l 97 - 102</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">4</td><td>76</td><td>april 9</td><td>philadelphia 76ers</td><td>w 116 - 101</td><td>corestates center</td><td>16549</td></tr>
+              <tr><td id="HEADER">5</td><td>77</td><td>april 11</td><td>indiana pacers</td><td>w 104 - 92</td><td>market square arena</td><td>16403</td></tr>
+              <tr><td id="HEADER">6</td><td>78</td><td>april 12</td><td>minnesota timberwolves</td><td>w 80 - 66</td><td>target center</td><td>18874</td></tr>
+              <tr><td id="HEADER">7</td><td>79</td><td>april 15</td><td>new jersey nets</td><td>w 109 - 101</td><td>omni coliseum</td><td>14458</td></tr>
+              <tr><td id="HEADER">8</td><td>80</td><td>april 16</td><td>new york knicks</td><td>l 92 - 96</td><td>madison square garden</td><td>19763</td></tr>
+              <tr><td id="HEADER">9</td><td>81</td><td>april 19</td><td>philadelphia 76ers</td><td>w 136 - 104</td><td>omni coliseum</td><td>16457</td></tr>
+              <tr><td id="HEADER">10</td><td>82</td><td>april 20</td><td>new jersey nets</td><td>l 92 - 108</td><td>continental airlines arena</td><td>18702</td></tr></table>
+        </div>
+
+        <div class="col-lg-6">
+            <strong>Accepted examples</strong>: <br><br>
+
+            <font color="green">Example 1</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, among the games at omni coliseum, the april 19 one drew the highest attendance <br><br>
+
+            <strong>1. Based on which column, does the statement choose the subset?</strong><br>
+            <strong>Your Answer:</strong> 5 <br>
+
+            <strong>2. Select the criterion, based on which we filter the table records to select this subset.</strong><br>
+            <strong>Your Answer:</strong> equal <br>
+
+            <strong>3. Based on the selected criterion in question 2, write the value to be filtered for selection of this subset; </strong><br>
+            <strong>Your Answer:</strong> omni coliseum <br>
+
+            <strong>4. Write the row numbers (separated by comma, e.g., 1,2,3) of the selected subset; </strong><br>
+            <strong>Your Answer:</strong> 2,3,7,9 <br>
+
+
+            ( Explain: this statement is talking about the highest attendance over <strong> the subset whose "location" column (column 5) is euqal to "omni coliseum".</strong> This subset is row 2,3,7,9. ) <br><br>
+
+
+            <font color="green">Example 2</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the earliest game against new york knicks was in omni coliseum <br><br>
+
+            <strong>1. Based on which column, does the statement choose the subset?</strong><br>
+            <strong>Your Answer:</strong> 3 <br>
+
+            <strong>2. Select the criterion, based on which we filter the table records to select this subset.</strong><br>
+            <strong>Your Answer:</strong> equal <br>
+
+            <strong>3. Based on the selected criterion in question 2, write the value to be filtered for selection of this subset; </strong><br>
+            <strong>Your Answer:</strong> new york knicks <br>
+
+            <strong>4. Write the row numbers (separated by comma, e.g., 1,2,3) of the selected subset; </strong><br>
+            <strong>Your Answer:</strong> 3,8 <br>
+
+
+            ( Explain: this statement is talking about the earliest game <strong> among those whose "opponent" column (column 3) is equal to "new york knicks" </strong> ) <br><br>
+
+
+            <font color="green">Example 3</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, among the games that they won, the april 12 one attracted the most fans <br><br>
+
+            <strong>1. Based on which column, does the statement choose the subset?</strong><br>
+            <strong>Your Answer:</strong> 4 <br>
+
+            <strong>2. Select the criterion, based on which we filter the table records to select this subset.</strong><br>
+            <strong>Your Answer:</strong> fuzzily match <br>
+
+            <strong>3. Based on the selected criterion in question 2, write the value to be filtered for selection of this subset; </strong><br>
+            <strong>Your Answer:</strong> w <br>
+
+            <strong>4. Write the row numbers (separated by comma, e.g., 1,2,3) of the selected subset; </strong><br>
+            <strong>Your Answer:</strong> 2,4,5,6,7,9 <br>
+
+
+            ( Explain: the criterion "fuzzily match" works for the case where the value to be filtered is not an exact match of table records, but fuzzily matches to them, like a substring, "w", in this case, which means "win") <br><br>
+
+
+            <font color="green">Example 4</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the most attended game before april 9 was against charlotte hornets <br><br>
+
+            <strong>1. Based on which column, does the statement choose the subset?</strong><br>
+            <strong>Your Answer:</strong> 2 <br>
+
+            <strong>2. Select the criterion, based on which we filter the table records to select this subset.</strong><br>
+            <strong>Your Answer:</strong> less than <br>
+
+            <strong>3. Based on the selected criterion in question 2, write the value to be filtered for selection of this subset; </strong><br>
+            <strong>Your Answer:</strong> april 9 <br>
+
+            <strong>4. Write the row numbers (separated by comma, e.g., 1,2,3) of the selected subset; </strong><br>
+            <strong>Your Answer:</strong> 1,2,3 <br>
+
+
+            ( Explain: talking about the game with the highest attendance whose "date" column (column 2) is smaller than april 9) <br><br>
+
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+<p>
+    <strong>Some important notes: </strong><br><br>
+
+    <strong>1. When selecting criterion, it's based on the actual relationship of the numerical value of table records, NOT the relationship expressed in the statement. For example, "the players ranked higher than 5th" means their ranks are numerically smaller than "5th" in the table records, thus we should select "less than" for this case. </strong><br><br>
+
+    <strong>2. If there are any errors in the given statement, or the given statement cannot be interpreted using the above formula, just leave the selection slots unselected and write 'n/a' in all other slots. </strong><br><br>
+</p>
+
+
+</div>
+</div>
+
+<div class="row" id="workContent">
+<div class="col-sm-12 col-sm-offset-0">
+<div class="panel panel-default" style="width: 100%;">
+    
+<div class="panel-heading">
+    If you have not study all the above examples carefully, or feel not very clear about the task, do not start doing this task -- you will be probably rejected. <br><br>
+    First read the following table, then annotate the scope (subset table rows) of the statement:
+</div>
+
+<div class="panel-body">
+Table Source: <a href=${wiki1}>${topic1}</a><br>
+Table title: ${topic1}
+<div id="url1">${url1}</div><br>
+<br>
+<strong>Statement: ${sent1}</strong>
+<br>
+<br>
+
+  <p>1. Based on which column, does the statement choose the subset?  </p>
+    <textarea name="col" class="form-control" rows="1" type="text" placeholder="write down column number" required></textarea><br>
+    <br>
+  <p>2. Select the criterion, based on which we filter the table records to select this subset. </p>
+  <select name="criterion">
+      <option value="tmp1">-- click to select --</option>
+      <option value="equal">equal</option>
+      <option value="not_equal">not equal</option>
+      <option value="greater_than">greater than</option>
+      <option value="greater_than_eq">greater than or equal to</option>
+      <option value="less_than">less than</option>
+      <option value="less_than_eq">less than or equal to</option>
+      <option value="fuzzily_match">fuzzily match</option>
+      <option value="other">other</option>
+      </select>
+      </p>
+  <br>
+  <p>3. Based on the selected criterion in question 2, write the value to be filtered for selection of this subset </p>
+    <textarea name="value" class="form-control" rows="1" type="text" placeholder="write down value to be filtered" required></textarea><br>
+    <br>
+  <p>4. Write the row numbers (separated by comma, e.g., 1,2,3) of the selected subset </p>
+    <textarea name="rows" class="form-control" rows="1" type="text" placeholder="write down row numbers, separated by comma" required></textarea><br>
+    <br>
+</div>
+
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+jQuery.ajaxSetup({async:false});
+$(document).ready(function(){
+    var table_content = "";
+    var cur = $(`#url1`).text()
+    $.get(cur, function(data){
+        var nwe_data = CSV2Table(data);
+        table_content += nwe_data;
+    }, 'text').fail(function() {
+    });
+    $(`#url1`).html(table_content);
+    
+    $('a').each(function(i, val){
+    if(val.href.match(/wikipedia/g))
+        val.target="_blank";
+    else
+        val.href = "javascript:void(0)"
+    });
+
+    var tabtrigger = $('#collapseTrigger');
+    var tabcontent = $('#instructionBody');
+
+    $('.collapse-text').text('(Click to expand)');
+    tabtrigger.click(function(){
+      tabcontent.toggle();
+      var isVisible = tabcontent.is(':visible');
+      if(isVisible){
+        $('.collapse-text').text('(Click to collapse)');
+      }else{
+        $('.collapse-text').text('(Click to expand)');
+      }
+    });
+
+});
+    
+function CSV2Table(data) {
+    var lines = data.split("\n");
+    lines.pop();
+    //var headers = lines[0].split(separator);
+    var output = []
+
+    var column = "<tr><td id=\"HEADER\"></td>"
+    for (i = 0; i < lines[0].slice(0,-1).split("#").length; i++){
+      this_i = i + 1
+      column += "<td id=\"HEADER\">" + this_i + "</td>";
+    }
+    column += "</tr>"
+    output.push(column);
+
+    for (i = 0; i < lines.length; i++){
+        //var fields = lines[i].split("#");
+        // add padding
+        if(i == 0){
+            output.push("<tr><td id=\"HEADER\"></td><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        }
+        else{
+            output.push("<tr><td id=\"HEADER\">" + i + "</td><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+        }
+        // if(i == 0){
+        //     output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        // }
+        // else{
+        //     output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");            
+        // }
+    }
+    output = "<table class='wikitable'>" + output.join("") + "</table>";
+    return output
+}
+</script>
+
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" />
+<style type="text/css">#collapseTrigger{ color:#fff; display: block; text-decoration: none; } #submitButton{ white-space: normal; } .image{ margin-bottom: 15px; }
+</style>
+        <style>
+            table, tr {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: lightyellow;
+                font-size: smaller;
+            }
+
+            td#HEADER  {background-color: lightblue;}
+
+            th {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                font-size: smaller;
+            }
+            td {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: #F7F8FA;
+                font-size: smaller;
+            }
+            .panel {
+                display: inline-block;
+                background: white;
+            }
+            p {
+              display: block;
+              margin-top: 0em;
+              margin-bottom: 1em;
+              margin-left: 1em;
+              margin-right: 1em;
+            }
+</style>

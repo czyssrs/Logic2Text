@@ -1,0 +1,335 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+    
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<section class="container" id="Survey"><!-- Instructions -->
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="panel panel-primary">
+
+<a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Survey Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+
+<div class="panel-body" id="instructionBody">
+    <p> <strong>You are given a table with its title and its wikipedia source, and a <strong>statement about describing the ordinal information in a table column</strong>, your job is to annotate the semantic meaning of this statement following 7 steps: </strong><br>
+
+<br>
+    1. What is the scope that the ordinal description is performed on? (all rows or a subset of rows) <br>
+    2. What is the table column that the ordinal description is based on? <br>
+    3. Is the ordinal description based on a numerically max to min or min to max ranking of the column records? <br>
+    4. What is the order described in the statement, based on this ranking? <br>
+    5. What is the table row containing this n-th record ? <br>
+    6. On this row, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'. <br>
+    7. Is this n-th record itself mentioned in the statement? <br>
+<br>
+
+We list some examples below to help you understand. <strong>Please carefully read and study these examples before starting. </strong> <strong>We pad the table column and row numbers around the table (blue part) to help you annotate. </strong>For column and row selection, the format is the col/row numbers seperated by comma (e.g., 1,2,3). 
+</p>
+<div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/1996%E2%80%9397_Atlanta_Hawks_season">1996 - 97 atlanta hawks season</a> </div>
+
+<div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><td id="HEADER"></td><td id="HEADER">1</td><td id="HEADER">2</td><td id="HEADER">3</td><td id="HEADER">4</td><td id="HEADER">5</td><td id="HEADER">6</td></tr>
+              <tr><td id="HEADER"></td><th>game</th><th>date</th><th>opponent</th><th>score</th><th>location</th><th>attendence</th></tr>
+              <tr><td id="HEADER">1</td><td>73</td><td>april 2</td><td>charlotte hornets</td><td>l 84 - 95</td><td>charlotte coliseum</td><td>24042</td></tr>
+              <tr><td id="HEADER">2</td><td>74</td><td>april 4</td><td>detroit pistons</td><td>w 103 - 89</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">3</td><td>75</td><td>april 5</td><td>new york knicks</td><td>l 97 - 102</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">4</td><td>76</td><td>april 9</td><td>philadelphia 76ers</td><td>w 116 - 101</td><td>corestates center</td><td>16549</td></tr>
+              <tr><td id="HEADER">5</td><td>77</td><td>april 11</td><td>indiana pacers</td><td>w 104 - 92</td><td>market square arena</td><td>16403</td></tr>
+              <tr><td id="HEADER">6</td><td>78</td><td>april 12</td><td>minnesota timberwolves</td><td>w 80 - 66</td><td>target center</td><td>18874</td></tr>
+              <tr><td id="HEADER">7</td><td>79</td><td>april 15</td><td>new jersey nets</td><td>w 109 - 101</td><td>omni coliseum</td><td>14458</td></tr>
+              <tr><td id="HEADER">8</td><td>80</td><td>april 16</td><td>new york knicks</td><td>l 92 - 96</td><td>madison square garden</td><td>19763</td></tr>
+              <tr><td id="HEADER">9</td><td>81</td><td>april 19</td><td>philadelphia 76ers</td><td>w 136 - 104</td><td>omni coliseum</td><td>16457</td></tr>
+              <tr><td id="HEADER">10</td><td>82</td><td>april 20</td><td>new jersey nets</td><td>l 92 - 108</td><td>continental airlines arena</td><td>18702</td></tr></table>
+        </div>
+
+        <div class="col-lg-6">
+            <strong>Accepted examples</strong>: <br><br>
+
+            <font color="green">Example 1</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the game on april 16 drew the 2nd highest number of fans. <br><br>
+
+            <strong>1. What is the scope that the ordinal description is performed on?</strong><br>
+            <strong>Your Answer:</strong> all rows <br>
+
+            <strong>2. What is the table column that the ordinal description is based on?</strong><br>
+            <strong>Your Answer:</strong> 6 <br>
+
+            <strong>3. Is the ordinal description based on a numerically max to min or min to max ranking of the column records?</strong><br>
+            <strong>Your Answer:</strong> max to min <br>
+
+            <strong>4. What is the order described in the statement, based on this ranking? </strong><br>
+            <strong>Your Answer:</strong> 2 <br>
+
+            <strong>5. What is the table row containing this n-th record? </strong><br>
+            <strong>Your Answer:</strong> 8 <br>
+
+            <strong>6. On this row, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'.</strong><br>
+            <strong>Your Answer:</strong> 2 <br>
+
+            <strong>7. Is this n-th record itself mentioned in the statement? </strong><br>
+            <strong>Your Answer:</strong> no <br><br>
+
+            ( Explain: this statement is talking about the 2nd maximum value in the "attendance" column (column 6). This 2nd maximum value is compared against all rows, thus the scope should be all table rows. The attendances are ranked numerically from high to low, therefore we select "max to min" for question 3. The statement also mentions the date of this game, which should be column 2 for question 6. This 2nd highest records itself, "19763", is not presented in the statement.) <br><br>
+            <br>
+
+
+
+
+            <font color="green">Example 2</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the 3rd earliest game was against the new york knicks, on april 5 <br><br>
+
+            <strong>1. What is the scope that the ordinal description is performed on?</strong><br>
+            <strong>Your Answer:</strong> all rows <br>
+
+            <strong>2. What is the table column that the ordinal description is based on?</strong><br>
+            <strong>Your Answer:</strong> 2 <br>
+
+            <strong>3. Is the ordinal description based on a numerically max to min or min to max ranking of the column records?</strong><br>
+            <strong>Your Answer:</strong> min to max <br>
+
+            <strong>4. What is the order described in the statement, based on this ranking? </strong><br>
+            <strong>Your Answer:</strong> 3 <br>
+
+            <strong>5. What is the table row containing this n-th record? </strong><br>
+            <strong>Your Answer:</strong> 3 <br>
+
+            <strong>6. On this row, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'.</strong><br>
+            <strong>Your Answer:</strong> 3 <br>
+
+            <strong>7. Is this n-th record itself mentioned in the statement? </strong><br>
+            <strong>Your Answer:</strong> yes <br><br>
+
+            ( Explain: the records in "date" column (column 2) is ranked from earlier to latter, which is min to max numerically. The statement also mentioned the opponent (column 3). The 3rd earliest date itself, "april 5", is presented in the statement, thus select "yes" for question 7) <br><br>
+
+
+
+            <font color="green">Example 3</font><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the 2nd latest game in omni coliseum was held on april 15, against new jersey nets<br><br>
+
+            <strong>1. What is the scope that the ordinal description is performed on?</strong><br>
+            <strong>Your Answer:</strong> a subset of rows <br>
+
+            <strong>2. What is the table column that the ordinal description is based on?</strong><br>
+            <strong>Your Answer:</strong> 2 <br>
+
+            <strong>3. Is the ordinal description based on a numerically max to min or min to max ranking of the column records?</strong><br>
+            <strong>Your Answer:</strong> max to min <br>
+
+            <strong>4. What is the order described in the statement, based on this ranking? </strong><br>
+            <strong>Your Answer:</strong> 2 <br>
+
+            <strong>5. What is the table row containing this n-th record? </strong><br>
+            <strong>Your Answer:</strong> 7 <br>
+
+            <strong>6. On this row, what are the other column(s) mentioned? If not any other column is mentioned, write 'n/a'.</strong><br>
+            <strong>Your Answer:</strong> 3 <br>
+
+            <strong>7. Is this n-th record itself mentioned in the statement? </strong><br>
+            <strong>Your Answer:</strong> yes <br><br>
+
+            ( Explain: This statement is talking about the order of the games held in "omni coliseum", thus the scope should be a subset of rows. the records in "date" column (column 2) is ranked from latter to earlier, which is max to min numerically. The statement also mentioned the opponent (column 3). The 2nd latest date itself, "april 15", is presented in the statement, thus select "yes" for question 7. NOTE that for question 6, we DO NOT include the column describing the scope (column 5 for this case)) <br><br>
+
+        </div>
+    </div>
+</div>
+</div>
+<p>
+    <strong>Some important notes: </strong><br><br>
+
+    <strong>1. The ranking is based on the numerical value of the table records, from max to min or min to max, NOT the relation expressed in the statement. For example, in the statement "player 1 got the 2nd highest position", the ranking should be "min to max", not "max to min". Because in the table a higher position is numerically smaller. </strong><br><br>
+
+    <strong>2. If there are any errors in the given statement, or the given statement cannot be interpreted using the above formula, just leave the selection slots unselected and write 'n/a' in all other slots. </strong>
+</p>
+
+</div>
+</div>
+
+<div class="row" id="workContent">
+<div class="col-sm-12 col-sm-offset-0">
+<div class="panel panel-default" style="width: 100%;">
+    
+<div class="panel-heading">
+    If you have not study all the above examples carefully, or feel not very clear about the task, do not start doing this task -- you will be probably rejected. <br><br>
+    First read the following table, then annotate the semantic meaning of the statement:
+</div>
+
+<div class="panel-body">
+Table Source: <a href=${wiki1}>${topic1}</a><br>
+Table title: ${topic1}
+<div id="url1">${url1}</div><br>
+<br>
+<strong>Statement: ${sent1}</strong>
+<br>
+<br>
+  <p>1. What is the scope that the ordinal description is performed on? </p>
+  <select name="scope">
+      <option value="tmp1">-- click to select --</option>
+      <option value="all">all rows</option>
+      <option value="subset">a subset of rows</option>
+      </select>
+      </p>
+  <br>
+  <p>2. What is the table column that the ordinal description is based on? </p>
+    <textarea name="col_ordinal" class="form-control" rows="1" type="text" placeholder="write down column number" required></textarea><br>
+    <br>
+  <p>3. Is the ordinal description based on a numerically max to min or min to max ranking of the column records? </p>
+  <select name="max_or_min">
+      <option value="tmp2">-- click to select --</option>
+      <option value="max_to_min">max to min</option>
+      <option value="min_to_max">min to max</option>
+      </select>
+      </p>
+  <br>
+  <p>4. What is the table row containing this n-th record? </p>
+    <textarea name="row" class="form-control" rows="1" type="text" placeholder="write down row number" required></textarea><br>
+    <br>
+  <p>5. What is the order described in the statement, based on this ranking? </p>
+    <textarea name="order" class="form-control" rows="1" type="text" placeholder="write down order" required></textarea><br>
+    <br>
+  <p>6. On this row, what are the other column(s) mentioned? (not including the column describing scope) If not any other column is mentioned, write 'n/a'. </p>
+    <textarea name="col_other" class="form-control" rows="1" type="text" placeholder="write down column number" required></textarea><br>
+    <br>
+  <p>7. Is this n-th record itself mentioned in the statement? </p>
+  <select name="value_mentioned">
+      <option value="tmp3">-- click to select --</option>
+      <option value="yes">yes</option>
+      <option value="no">no</option>
+      </select>
+      </p>
+  <br>
+</div>
+
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+jQuery.ajaxSetup({async:false});
+$(document).ready(function(){
+    var table_content = "";
+    var cur = $(`#url1`).text()
+    $.get(cur, function(data){
+        var nwe_data = CSV2Table(data);
+        table_content += nwe_data;
+    }, 'text').fail(function() {
+    });
+    $(`#url1`).html(table_content);
+    
+    $('a').each(function(i, val){
+    if(val.href.match(/wikipedia/g))
+        val.target="_blank";
+    else
+        val.href = "javascript:void(0)"
+    });
+
+    var tabtrigger = $('#collapseTrigger');
+    var tabcontent = $('#instructionBody');
+
+    $('.collapse-text').text('(Click to expand)');
+    tabtrigger.click(function(){
+      tabcontent.toggle();
+      var isVisible = tabcontent.is(':visible');
+      if(isVisible){
+        $('.collapse-text').text('(Click to collapse)');
+      }else{
+        $('.collapse-text').text('(Click to expand)');
+      }
+    });
+
+});
+    
+function CSV2Table(data) {
+    var lines = data.split("\n");
+    lines.pop();
+    //var headers = lines[0].split(separator);
+    var output = []
+
+    var column = "<tr><td id=\"HEADER\"></td>"
+    for (i = 0; i < lines[0].slice(0,-1).split("#").length; i++){
+      this_i = i + 1
+      column += "<td id=\"HEADER\">" + this_i + "</td>";
+    }
+    column += "</tr>"
+    output.push(column);
+
+    for (i = 0; i < lines.length; i++){
+        //var fields = lines[i].split("#");
+        // add padding
+        if(i == 0){
+            output.push("<tr><td id=\"HEADER\"></td><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        }
+        else{
+            output.push("<tr><td id=\"HEADER\">" + i + "</td><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+        }
+        // if(i == 0){
+        //     output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        // }
+        // else{
+        //     output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");            
+        // }
+    }
+    output = "<table class='wikitable'>" + output.join("") + "</table>";
+    return output
+}
+</script>
+
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" />
+<style type="text/css">#collapseTrigger{ color:#fff; display: block; text-decoration: none; } #submitButton{ white-space: normal; } .image{ margin-bottom: 15px; }
+</style>
+        <style>
+            table, tr {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: lightyellow;
+                font-size: smaller;
+            }
+
+            td#HEADER  {background-color: lightblue;}
+
+            th {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                font-size: smaller;
+            }
+            td {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: #F7F8FA;
+                font-size: smaller;
+            }
+            .panel {
+                display: inline-block;
+                background: white;
+            }
+            p {
+              display: block;
+              margin-top: 0em;
+              margin-bottom: 1em;
+              margin-left: 1em;
+              margin-right: 1em;
+            }
+</style>

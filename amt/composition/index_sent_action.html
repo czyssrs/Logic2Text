@@ -1,0 +1,345 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+    
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<section class="container" id="Survey"><!-- Instructions -->
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="panel panel-primary">
+
+<a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Survey Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+
+<div class="panel-body" id="instructionBody">
+    <p> <strong>You are given a table with its title and its wikipedia source, your job is to select a certain action, then compose non-trivial statements supported by the table, based on the selected action.</strong><br>
+<br>
+        - <strong>"action"</strong>: Here we consider the following 7 actions, which is often used when people describe table contents: <strong>count, aggregation, comparative, superlative, unique, majority, ordinal</strong><br><br>
+        - <strong>"compose non-trivial statement"</strong>: You should first gain a deep understanding of the table (through reading the table wikipedia page provided), then based on this, your statement should be natural, fluent, diversified, and coherent with the context of the table. Do not just copy table records into a rigid template utterrance without deep understanding of the table context.  <br>
+<br>
+
+<strong>Your job consists of 3 steps:<br>
+    1. Read the table and go through the table wikipedia page to understand the table context. <br>
+    2. Select an action from the provided list.<br>
+    3. Based on the table, write down a statement according to the selected action. <br>
+</strong>
+<br>
+For each table you will select three actions, each followed by the composed statement. <br><br>
+
+We list two examples below to help you understand (Everything in the table is lower-cased, you are free to use lower or upper case in your sentence). <strong>Please carefully read and study these examples before starting, we have examples for each of the actions as well as rejected examples.</strong>:
+</p>
+<div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/Real_World/Road_Rules_Challenge:_The_Island">Road_Rules_Challenge:_The_Island</a> </div>
+
+<div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><th>player</th><th>original season</th><th>gender</th><th>eliminated</th><th>placing</th></tr>
+              <tr><td>derrick kosinski</td><td>rr : x - treme</td><td>male</td><td>winner</td><td>winner</td></tr>
+              <tr><td>evelyn smith</td><td>fresh meat</td><td>female</td><td>winner</td><td>winner</td></tr>
+              <tr><td>johnny devenanzio</td><td>rw : key west</td><td>male</td><td>winner</td><td>winner</td></tr>
+              <tr><td>kenny santucci</td><td>fresh meat</td><td>male</td><td>winner</td><td>winner</td></tr>
+              <tr><td>jenn grijalva</td><td>rw : denver</td><td>female</td><td>episode 8</td><td>runner - up</td></tr>
+              <tr><td>paula meronek</td><td>rw : key west</td><td>female</td><td>episode 8</td><td>runner - up</td></tr>
+              <tr><td>robin hibbard</td><td>rw : san diego</td><td>female</td><td>episode 8</td><td>runner - up</td></tr>
+              <tr><td>ryan kehoe</td><td>fresh meat</td><td>male</td><td>episode 8</td><td>runner - up</td></tr>
+              <tr><td>dunbar merrill</td><td>rw : sydney</td><td>male</td><td>episode 8</td><td>9th place</td></tr>
+              <tr><td>johanna botta</td><td>rw : austin</td><td>female</td><td>episode 8</td><td>10th place</td></tr>
+              <tr><td>kellyanne judd</td><td>rw : sydney</td><td>female</td><td>episode 8</td><td>11th place</td></tr>
+              <tr><td>dan walsh</td><td>rr : viewers' revenge</td><td>male</td><td>episode 8</td><td>12th place</td></tr>
+              <tr><td>colie edison</td><td>rw : denver</td><td>female</td><td>episode 7</td><td>13th place</td></tr>
+              <tr><td>cohutta grindstaff</td><td>rw : sydney</td><td>male</td><td>episode 6</td><td>14th place</td></tr>
+              <tr><td>tyrie ballard</td><td>rw : denver</td><td>male</td><td>episode 5</td><td>15th place</td></tr>
+              <tr><td>ashli robson</td><td>rw : sydney</td><td>female</td><td>episode 4</td><td>16th place</td></tr>
+              <tr><td>rachel robinson</td><td>rr : campus crawl</td><td>female</td><td>episode 3</td><td>17th place</td></tr>
+              <tr><td>abram boise</td><td>rr : south pacific</td><td>male</td><td>episode 2</td><td>18th place</td></tr>
+              <tr><td>dave malinosky</td><td>rw : hollywood</td><td>male</td><td>episode 2 (quit)</td><td>19th place</td></tr></table>
+        </div>
+
+        <div class="col-lg-6">
+            <strong><font color="green">Accepted examples</font></strong>: <br><br>
+            1. <strong>Action:</strong> count <br>
+                <strong>Statement:</strong> There are 4 winners in the challenge "the island"<br>
+                ( Explain: count some rows with certain attribute in a column ) <br>
+                <br>
+            2. <strong>Action:</strong> superlative <br>
+                <strong>Statement:</strong> in the road rules challenge "the island", derrick kosinski ranks the highest <br>
+                <br>
+                ( Explain: describe the superlative relation in a column. Though the name "challenge: The Island" is not implied by the table, it is indicated in the table title "Road_Rules_Challenge:_The_Island", therefore it's good to include this information in the statement so that the statement is more comprehensive and self-contained. ) <br>
+                <br>
+            3. <strong>Action:</strong> comparative <br>
+                <strong>Statement:</strong> in the challenge "the island", cohutta grindstaff was eliminated earlier than robin hibbard<br>
+                ( Explain: Compare two different rows. cohutta was eliminated in episode 6 while robin was eliminated in episode 8 ) <br>
+                <br>
+
+
+            <strong><font color="red">Rejected examples</font></strong>: <br><br>
+            1. <strong>Action:</strong> count <br>
+                <strong>Statement:</strong> in the challenge "the island", dunbar merrill got the 9th place <br>
+                <br>
+                ( Explain: "count" means counting some rows with certain attributes in a column, like we listed in the first example. It does not simply mean any statement with numbers. For example like this one, it's just a plain statement based on a single row, without any action. This will be rejected.)<br>
+                <br>
+            2. <strong>Action:</strong> comparative <br>
+                <strong>Statement:</strong> the number of winner is the same as the number of runner-ups. <br>
+                <br>
+                ( Explain: Eventhough a comparative sentence, this one actually includes two actions: count and comparative, because you have to first count the number of winners and runner-ups, then make the comparison. We do not prefer statement containing multiple actions as such. <strong>Make sure your statement contains only one action as you selected.</strong> )<br>
+                <br>
+            3. <strong>Action:</strong> count <br>
+                <strong>Statement:</strong> there are 19 people in this table <br>
+                <br>
+                ( Explain: Do not explicitly say "This table ...", such as "this table has 19 rows”, "there are 10 people listed". Such statements are trivial and will be rejected -- we need statements naturally describing the table content based on the table context, not trivially describing the table itself. )<br>
+                <br>
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/AFC_Champions_League">AFC_Champions_League</a>
+<br></div>
+   <div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><th>rank</th><th>member association</th><th>points</th><th>group stage</th><th>play - off</th><th>afc cup</th></tr>
+              <tr><td>1</td><td>saudi arabia</td><td>860.5</td><td>4</td><td>0</td><td>0</td></tr>
+              <tr><td>2</td><td>qatar</td><td>838.2</td><td>4</td><td>0</td><td>0</td></tr>
+              <tr><td>3</td><td>iran</td><td>813.5</td><td>3</td><td>1</td><td>0</td></tr>
+              <tr><td>4</td><td>uae</td><td>750.2</td><td>2</td><td>2</td><td>0</td></tr>
+              <tr><td>5</td><td>uzbekistan</td><td>680.8</td><td>1</td><td>0</td><td>0</td></tr>
+              <tr><td>6</td><td>india</td><td>106.4</td><td>0</td><td>0</td><td>2</td></tr>
+              <tr><td>7</td><td>jordan</td><td>128.7</td><td>0</td><td>0</td><td>2</td></tr></table>
+        </div>
+        
+        <div class="col-lg-6">
+            <br>
+            <strong><font color="green">Accepted examples</font></strong>: <br><br>
+            1. <strong>Action:</strong> unique <br>
+                <strong>Statement:</strong> among the members of the afc champions league, uae is the only one making the play-off twice<br>
+                <br>
+            2. <strong>Action:</strong> superlative <br>
+                <strong>Statement:</strong> The member representing saudi arabia got the most points in the afc champions league <br>
+                <br>
+            3. <strong>Action:</strong> aggregation <br>
+                <strong>Statement:</strong> all the member associations of the afc champions league score an average points of around 680 <br>
+                <br>
+                ( Explain: Aggregation is the <strong>sum or average</strong> calculations on a certain column. )<br>
+                <br>
+            4. <strong>Action:</strong> majority <br>
+                <strong>Statement:</strong> most of the teams in the afc champions league won 0 afc cup <br>
+                <br>
+                ( Explain: For majority we consider "most" and "all". Here if all the teams had 0 afc cup, then a good statement could be "all the teams in the afc champions league won 0 afc cup". )<br>
+                <br>
+            5. <strong>Action:</strong> ordinal <br>
+                <strong>Statement:</strong> qatar achieved the 2nd highest points, among the members of afc champions league <br>
+                <br>
+                ( Explain: the ordinal information should be <strong>something infered from a column</strong>. Here in this example, we rank all the records in the "points" column and find qatar got the 2nd highest. If the ordinal information is already given in the table, like the "rank" in this example, then statements like "qatar ranked the 2nd" is just a plain statement based on a single row and will be rejected. )<br>
+                <br>
+
+            <strong><font color="red">Rejected examples</font></strong>: <br><br>
+            1. <strong>Action:</strong> unique <br>
+                <strong>Statement:</strong> the play-off of qatar is 0 <br>
+                <br>
+                ( Explain: this is a trivial statement without deep understanding of the table context, just trivially describing table records in a template "the &lt column name &gt of &lt table value &gt is balabala". This will be rejected.)<br>
+                <br>
+            2. <strong>Action:</strong> count <br>
+                <strong>Statement:</strong> there are 7 members <br>
+                <br>
+                ( Explain: <strong>your statement should be comprehensive and self-contained</strong>, i.e., <strong>you should include the information from table title</strong> in your statement such that when reading the statement, we do not need to go through the table to know what you are talking about. To ensure this, <strong>the length of your statement should be at least 10 words. Otherwise it will be rejected. </strong>)<br>
+                <br>
+        </div>
+    </div>
+    </div>
+</div>
+
+<p>
+    <strong>Some important notes: </strong><br><br>
+
+    <strong>1: Each statement should contain only one type of action as you selected. Some statements may contain multiple actions implicitly, such as the example we list above (compare the counting results) . Make sure to avoid such statements.</strong><br><br>
+
+    <strong>2: Do not limit to only certain types of actions (For example across all your instances only select the same 3 actions, this will be rejected). Across all the instances you should select diverse types of actions.</strong><br><br>
+
+    <strong>3: Try your best to avoid typo or grammar errors. Statements with too many typos or grammar errors will be rejected.</strong><br><br>
+
+    <strong>4: Your statements should be natural, fluent and coherent with the context of the table, based on deep understanding of the table and its title. Do not just use a rigid template utterance pattern and fill in table records (For example, if you just use the template "In &lt table title &gt, there are &lt number &gt &lt table records &gt" for the action "count" across all your examples, they will be rejected.) You should first go through the wikipedia page to know what the table is talking about, then compose natural and diversified statements based on deep understanding of the table context. </strong><br><br>
+
+    <strong>5: The length of your statement should be at least 10 words. Please include the information from table title to make your statement more comprehensive and self-contained</strong><br><br>
+</p>
+</div>
+</div>
+
+<div class="row" id="workContent">
+<div class="col-sm-12 col-sm-offset-0">
+<div class="panel panel-default" style="width: 100%;">
+    
+<div class="panel-heading">
+    Note: If you have not read all the instructions and examples above carefully, or feel not very clear, do not start doing this task -- you will probably be rejected. <br>
+    Please select diverse types of actions. Roughly every 5 tables you annotate, each action should appear at least once. <br>
+    Your statement should be at least 10 words long. <br><br>
+
+    <strong>** We have collected enough instances of 'count', 'majority' and 'unique' in previous batches ... In this batch we only need to collect the rest 4 ones. If you find that it is INDEED impossible to compose statement for a certain action, just leave it unselected and write 'n/a'. **</strong><br><br>
+    First read the following table, then select and write three ( action, statement ) for this given table:
+</div>
+
+<div class="panel-body">
+Table Source: <a href=${wiki1}>${topic1}</a><br>
+Table title: ${topic1}
+<div id="url1">${url1}</div><br>
+  <p>Select an action:
+  <select name="action1">
+      <option value="tmp1">-- click to select --</option>
+      <option value="aggregation">aggregation</option>
+      </select>
+      </p>
+    <textarea name="d1" class="form-control" rows="2" type="text" placeholder="Please write a statement, according to the selected action and the table" required></textarea><br>
+<br>
+  <p>Select an action:
+  <select name="action2">
+      <option value="tmp2">-- click to select --</option>
+      <option value="superlative">superlative</option>
+      </select>
+      </p>
+    <textarea name="d2" class="form-control" rows="2" type="text" placeholder="Please write a statement, according to the selected action and the table" required></textarea><br>
+<br>
+  <p>Select an action:
+  <select name="action3">
+      <option value="tmp3">-- click to select --</option>
+      <option value="comparative">comparative</option>
+      <option value="ordinal">ordinal</option>
+      </select>
+      </p>
+    <textarea name="d3" class="form-control" rows="2" type="text" placeholder="Please write a statement, according to the selected action and the table" required></textarea><br>
+
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+jQuery.ajaxSetup({async:false});
+$(document).ready(function(){
+    var table_content = "";
+    var cur = $(`#url1`).text()
+    $.get(cur, function(data){
+        var nwe_data = CSV2Table(data);
+        table_content += nwe_data;
+    }, 'text').fail(function() {
+    });
+    $(`#url1`).html(table_content);
+    
+    $('a').each(function(i, val){
+    if(val.href.match(/wikipedia/g))
+        val.target="_blank";
+    else
+        val.href = "javascript:void(0)"
+    });
+
+    var tabtrigger = $('#collapseTrigger');
+    var tabcontent = $('#instructionBody');
+
+    $('.collapse-text').text('(Click to expand)');
+    tabtrigger.click(function(){
+      tabcontent.toggle();
+      var isVisible = tabcontent.is(':visible');
+      if(isVisible){
+        $('.collapse-text').text('(Click to collapse)');
+      }else{
+        $('.collapse-text').text('(Click to expand)');
+      }
+    });
+
+});
+    
+function CSV2Table(data) {
+    var lines = data.split("\n");
+    lines.pop();
+    //var headers = lines[0].split(separator);
+    var output = []
+
+    // var column = "<tr><td id=\"HEADER\"></td>"
+    // for (i = 0; i < lines[0].slice(0,-1).split("#").length; i++){
+    //   this_i = i + 1
+    //   column += "<td id=\"HEADER\">" + this_i + "</td>";
+    // }
+    // column += "</tr>"
+    // output.push(column);
+
+    for (i = 0; i < lines.length; i++){
+        //var fields = lines[i].split("#");
+        // add padding
+        // if(i == 0){
+        //     output.push("<tr><td id=\"HEADER\"></td><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        // }
+        // else{
+        //     output.push("<tr><td id=\"HEADER\">" + i + "</td><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+        // }
+        if(i == 0){
+            output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        }
+        else{
+            output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");            
+        }
+    }
+    output = "<table class='wikitable'>" + output.join("") + "</table>";
+    return output
+}
+</script>
+
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" />
+<style type="text/css">#collapseTrigger{ color:#fff; display: block; text-decoration: none; } #submitButton{ white-space: normal; } .image{ margin-bottom: 15px; }
+</style>
+        <style>
+            table, tr {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: lightyellow;
+                font-size: smaller;
+            }
+
+            td#HEADER  {background-color: lightblue;}
+
+            th {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                font-size: smaller;
+            }
+            td {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: #F7F8FA;
+                font-size: smaller;
+            }
+            .panel {
+                display: inline-block;
+                background: white;
+            }
+            p {
+              display: block;
+              margin-top: 0em;
+              margin-bottom: 1em;
+              margin-left: 1em;
+              margin-right: 1em;
+            }
+</style>

@@ -1,0 +1,345 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+    
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<section class="container" id="Survey"><!-- Instructions -->
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="panel panel-primary">
+
+<a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Survey Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+
+<div class="panel-body" id="instructionBody">
+    <p> <strong>You are given a table with its title and its wikipedia source, together with one statement composed based on the table. Your job is to verify the following 3 aspects of the statement:</strong><br>
+<br>
+
+
+<strong>
+    1. Is this statement performing aggregation over a column? <br>
+    2. Is this statement factually correct, according to the table?<br>
+    3. Is this statement grammatically correct and fluent? <br>
+</strong>
+<br>
+
+<strong>
+  "aggregation" --  sum or average calculations over the records in a column <br>
+</strong>
+<br>
+
+We list some examples below to help you understand. The statements are composed based on the table title and table contents. You can open the table wikipedia source link to understand the context. All statements are lower-cased.</strong>:
+</p>
+<!-- <div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/1996%E2%80%9397_Atlanta_Hawks_season">1996 - 97 atlanta hawks season</a> </div>
+
+<div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><th>game</th><th>date</th><th>opponent</th><th>score</th><th>location</th><th>attendence</th></tr>
+              <tr><td>73</td><td>april 2</td><td>charlotte hornets</td><td>l 84 - 95</td><td>charlotte coliseum</td><td>24042</td></tr>
+              <tr><td>74</td><td>april 4</td><td>detroit pistons</td><td>w 103 - 89</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td>75</td><td>april 5</td><td>new york knicks</td><td>l 97 - 102</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td>76</td><td>april 9</td><td>philadelphia 76ers</td><td>w 116 - 101</td><td>corestates center</td><td>16549</td></tr>
+              <tr><td>77</td><td>april 11</td><td>indiana pacers</td><td>w 104 - 92</td><td>market square arena</td><td>16403</td></tr>
+              <tr><td>78</td><td>april 12</td><td>minnesota timberwolves</td><td>w 80 - 66</td><td>target center</td><td>18874</td></tr>
+              <tr><td>79</td><td>april 15</td><td>new jersey nets</td><td>w 109 - 101</td><td>omni coliseum</td><td>14458</td></tr>
+              <tr><td>80</td><td>april 16</td><td>new york knicks</td><td>l 92 - 96</td><td>madison square garden</td><td>19763</td></tr>
+              <tr><td>81</td><td>april 19</td><td>philadelphia 76ers</td><td>w 136 - 104</td><td>omni coliseum</td><td>16457</td></tr>
+              <tr><td>82</td><td>april 20</td><td>new jersey nets</td><td>l 92 - 108</td><td>continental airlines arena</td><td>18702</td></tr></table>
+        </div>
+
+        <div class="col-lg-6">
+            <strong><font color="green">Accepted examples</font></strong>: <br><br>
+            1. <strong>Statement:</strong> in the 96'-97' season of atlanta hawks, the april 16 game drew the 2nd highest attendance<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                (Explain: this statement is talking about the ranking of the attendance size, as in column 'attendance')<br>
+                <br>
+            2. <strong>Statement:</strong> among the games in the 96'-97' season of the hawks, the game against new jersey nets was the last one they played in april <br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                <br>
+            3. <strong>Statement:</strong> in the 1996 - 97 atlanta hawks season, the april 2 game drew the 2nd highest attendance<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: no <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                <br>
+            4. <strong>Statement:</strong> in the 1996 - 97 atlanta hawks season, the april 16 game is the 2nd highest attendance<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: no <br>
+                <br>
+
+        </div>
+    </div>
+</div>
+</div> -->
+
+<div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/AFC_Champions_League">AFC_Champions_League</a>
+<br></div>
+   <div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><th>rank</th><th>member association</th><th>points</th><th>group stage</th><th>play - off</th><th>afc cup</th></tr>
+              <tr><td>1</td><td>saudi arabia</td><td>860.5</td><td>4</td><td>0</td><td>0</td></tr>
+              <tr><td>2</td><td>qatar</td><td>838.2</td><td>4</td><td>0</td><td>0</td></tr>
+              <tr><td>3</td><td>iran</td><td>813.5</td><td>3</td><td>1</td><td>0</td></tr>
+              <tr><td>4</td><td>uae</td><td>750.2</td><td>2</td><td>2</td><td>0</td></tr>
+              <tr><td>5</td><td>uzbekistan</td><td>680.8</td><td>1</td><td>0</td><td>0</td></tr>
+              <tr><td>6</td><td>india</td><td>106.4</td><td>0</td><td>0</td><td>2</td></tr>
+              <tr><td>7</td><td>jordan</td><td>128.7</td><td>0</td><td>0</td><td>2</td></tr></table>
+        </div>
+        
+        <div class="col-lg-6">
+            <br>
+            <strong><font color="green">Accepted examples</font></strong>: <br><br>
+            1. <strong>Statement:</strong> in the afc champion league, the top 7 ranked teams got an average points of around 600<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                (Explain: this statement performs the calculation of average over the column 'points' ) <br>
+                <br>
+            2. <strong>Statement:</strong> in the afc champion league, the top 7 ranked teams got an average points of around 100<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: no <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                (Explain: this statement performs the calculation of average over the column 'points', but with wrong calculation result ) <br>
+                <br>
+            3. <strong>Statement:</strong> in the afc champion league, the top 7 ranked teams made the play-offs a total of 3 times<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                (Explain: this statement performs sum calculation over the column 'play-off') <br>
+                <br>
+            4. <strong>Statement:</strong> in the afc champion league, the team of india and jordan won a total of 4 afc cups<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: yes <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                (Explain: this statement performs sum calculation over the column 'afc cup', and on the two row 'india' and 'jordan') <br>
+                <br>
+            5. <strong>Statement:</strong> in the afc champion league, there are a total of 7 teams<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: no <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                (Explain: this statement is just counting the number of rows, not performing aggregation (sum or avergae) over the records in a column. ) <br>
+                <br>
+            6. <strong>Statement:</strong> in the afc champion league, 5 teams won 0 afc cup<br>
+                <strong>1. Is this statement performing aggregation over a column?</strong><br>
+                Your answer: no <br>
+                <strong>2. Is this statement factually correct, according to the table? </strong><br>
+                Your answer: yes <br>
+                <strong>3. Is this statement grammatically correct and fluent? </strong><br>
+                Your answer: yes <br>
+                (Explain: this statement is just counting the number of rows, not performing aggregation (sum or avergae) over the records in a column. ) <br>
+                <br>
+        </div>
+    </div>
+    </div>
+</div>
+<p>
+    <strong>** Warnings ** </strong><br><br>
+
+    <strong>DO NOT attempt to game the system, for example, simply selecting 'yes' for all examples, or randomly selecting 'yes' or 'no'. Your answers will be carefully checked. If any action of gaming the system is detected, we will REJECT ALL YOUR HITS. </strong><br><br>
+</p>
+</div>
+</div>
+
+<div class="row" id="workContent">
+<div class="col-sm-12 col-sm-offset-0">
+<div class="panel panel-default" style="width: 100%;">
+    
+<div class="panel-heading">
+    First read the following table and the statement, then verify the 3 aspects of the statement based on the table:
+</div>
+
+<div class="panel-body">
+Table Source: <a href=${wiki1}>${topic1}</a><br>
+Table title: ${topic1}
+<div id="url1">${url1}</div><br>
+<strong>Statement: ${sent1} </strong><br>
+  <p>1. Is this statement performing aggregation over a column? <br>
+  <select name="verify_action">
+      <option value="tmp1">-- click to select --</option>
+      <option value="yes">yes</option>
+      <option value="no">no</option>
+      </select>
+      </p>
+  <p>2. Is this statement factually correct, according to the table? <br>
+  <select name="verify_fact">
+      <option value="tmp2">-- click to select --</option>
+      <option value="yes">yes</option>
+      <option value="no">no</option>
+      </select>
+      </p>
+  <p>3. Is this statement grammatically correct and fluent? <br>
+  <select name="verify_grammar">
+      <option value="tmp3">-- click to select --</option>
+      <option value="yes">yes</option>
+      <option value="no">no</option>
+      </select>
+      </p>
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+jQuery.ajaxSetup({async:false});
+$(document).ready(function(){
+    var table_content = "";
+    var cur = $(`#url1`).text()
+    $.get(cur, function(data){
+        var nwe_data = CSV2Table(data);
+        table_content += nwe_data;
+    }, 'text').fail(function() {
+    });
+    $(`#url1`).html(table_content);
+    
+    $('a').each(function(i, val){
+    if(val.href.match(/wikipedia/g))
+        val.target="_blank";
+    else
+        val.href = "javascript:void(0)"
+    });
+
+    var tabtrigger = $('#collapseTrigger');
+    var tabcontent = $('#instructionBody');
+
+    $('.collapse-text').text('(Click to expand)');
+    tabtrigger.click(function(){
+      tabcontent.toggle();
+      var isVisible = tabcontent.is(':visible');
+      if(isVisible){
+        $('.collapse-text').text('(Click to collapse)');
+      }else{
+        $('.collapse-text').text('(Click to expand)');
+      }
+    });
+
+});
+    
+function CSV2Table(data) {
+    var lines = data.split("\n");
+    lines.pop();
+    //var headers = lines[0].split(separator);
+    var output = []
+
+    // var column = "<tr><td id=\"HEADER\"></td>"
+    // for (i = 0; i < lines[0].slice(0,-1).split("#").length; i++){
+    //   this_i = i + 1
+    //   column += "<td id=\"HEADER\">" + this_i + "</td>";
+    // }
+    // column += "</tr>"
+    // output.push(column);
+
+    for (i = 0; i < lines.length; i++){
+        //var fields = lines[i].split("#");
+        // add padding
+        // if(i == 0){
+        //     output.push("<tr><td id=\"HEADER\"></td><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        // }
+        // else{
+        //     output.push("<tr><td id=\"HEADER\">" + i + "</td><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+        // }
+        if(i == 0){
+            output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        }
+        else{
+            output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");            
+        }
+    }
+    output = "<table class='wikitable'>" + output.join("") + "</table>";
+    return output
+}
+</script>
+
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" />
+<style type="text/css">#collapseTrigger{ color:#fff; display: block; text-decoration: none; } #submitButton{ white-space: normal; } .image{ margin-bottom: 15px; }
+</style>
+        <style>
+            table, tr {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: lightyellow;
+                font-size: smaller;
+            }
+
+            td#HEADER  {background-color: lightblue;}
+
+            th {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                font-size: smaller;
+            }
+            td {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: #F7F8FA;
+                font-size: smaller;
+            }
+            .panel {
+                display: inline-block;
+                background: white;
+            }
+            p {
+              display: block;
+              margin-top: 0em;
+              margin-bottom: 1em;
+              margin-left: 1em;
+              margin-right: 1em;
+            }
+</style>

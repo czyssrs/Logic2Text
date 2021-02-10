@@ -1,0 +1,231 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+    
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<section class="container" id="Survey"><!-- Instructions -->
+<div class="row">
+<div class="col-xs-12 col-md-12">
+<div class="panel panel-primary">
+
+<a class="panel-heading" href="javascript:void(0);" id="collapseTrigger"><strong>Survey Instructions</strong> <span class="collapse-text">(Click to expand)</span> </a>
+
+<div class="panel-body" id="instructionBody">
+    <p> You are given a table with its title and its wikipedia source, your job is to <strong>compose a statement describing uniqueness in a subset of table rows</strong><br>
+
+<br>
+    <strong>Requirement: the scope of your statement describing uniqueness should be on a subset of table rows, NOT all rows</strong>
+<br><br>
+
+We list some examples below to help you understand, you can open the table wikipedia link to understand the context of the table. <strong>Please carefully read and study these examples before starting. </strong> We pad the table column and row numbers around the table (blue part) to help you compose. 
+</p>
+<div class="panel panel-default" class="col-lg-12">
+<div class="panel-heading"> Table Wikipedia Link: <a href="https://en.wikipedia.org/wiki/1996%E2%80%9397_Atlanta_Hawks_season">1996 - 97 atlanta hawks season</a> </div>
+
+<div class="row">
+    <div class="panel-body" id="instructionBody">
+        <div class="col-lg-6">
+            <table class='wikitable'>
+              <tr><td id="HEADER"></td><td id="HEADER">1</td><td id="HEADER">2</td><td id="HEADER">3</td><td id="HEADER">4</td><td id="HEADER">5</td><td id="HEADER">6</td></tr>
+              <tr><td id="HEADER"></td><th>game</th><th>date</th><th>opponent</th><th>score</th><th>location</th><th>attendence</th></tr>
+              <tr><td id="HEADER">1</td><td>73</td><td>april 2</td><td>charlotte hornets</td><td>l 84 - 95</td><td>charlotte coliseum</td><td>24042</td></tr>
+              <tr><td id="HEADER">2</td><td>74</td><td>april 4</td><td>detroit pistons</td><td>w 103 - 89</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">3</td><td>75</td><td>april 5</td><td>new york knicks</td><td>l 97 - 102</td><td>omni coliseum</td><td>16378</td></tr>
+              <tr><td id="HEADER">4</td><td>76</td><td>april 9</td><td>philadelphia 76ers</td><td>w 116 - 101</td><td>corestates center</td><td>16549</td></tr>
+              <tr><td id="HEADER">5</td><td>77</td><td>april 11</td><td>indiana pacers</td><td>w 104 - 92</td><td>market square arena</td><td>16403</td></tr>
+              <tr><td id="HEADER">6</td><td>78</td><td>april 12</td><td>minnesota timberwolves</td><td>w 80 - 66</td><td>target center</td><td>18874</td></tr>
+              <tr><td id="HEADER">7</td><td>79</td><td>april 15</td><td>new jersey nets</td><td>w 109 - 101</td><td>omni coliseum</td><td>14458</td></tr>
+              <tr><td id="HEADER">8</td><td>80</td><td>april 16</td><td>new york knicks</td><td>l 92 - 96</td><td>madison square garden</td><td>19763</td></tr>
+              <tr><td id="HEADER">9</td><td>81</td><td>april 19</td><td>philadelphia 76ers</td><td>w 136 - 104</td><td>omni coliseum</td><td>16457</td></tr>
+              <tr><td id="HEADER">10</td><td>82</td><td>april 20</td><td>new jersey nets</td><td>l 92 - 108</td><td>continental airlines arena</td><td>18702</td></tr></table>
+        </div>
+
+        <div class="col-lg-6">
+            <strong><font color="green">Accepted examples</font></strong>: <br><br>
+
+
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the only game with an attendance fewer than 16000 at omni coliseum was on april 15 <br><br>
+            (Explain: talking about the uniqueness in the "attendance" column, with the scope of the subset of rows whose "location" is "omni coliseum") <br><br>
+
+            <strong>Statement: </strong> in the atlanta hawks 96'-97' season, the only game they won before april 5 was against detroit pistons <br><br>
+            (Explain: talking about the uniqueness in the "score" column, with the scope of the subset of rows whose "date" is earlier than april 5) <br><br>
+
+
+            <br>
+
+
+            <strong><font color="red">Rejected examples</font></strong>: <br><br>
+            <strong>Statement: </strong> in the 96'-97' season of atlanta hawks, the only game at target center was on april 12 <br><br>
+            (Explain: the scope of this uniqueness statement is all rows, not a subset of rows) <br><br>
+
+            <strong>Statement: </strong> the only game at target center was april 12 <br><br>
+            (Explain: <strong>your statement should be comprehensive and self-contained</strong>, i.e., <strong>you should include the information from table title</strong> in your statement such that when reading the statement, we do not need to go through the table to know what you are talking about. To ensure this, <strong>the length of your statement should be at least 10 words. Otherwise it will be rejected.) <br><br>
+
+
+        </div>
+    </div>
+</div>
+</div>
+<p>
+    <strong>Some important notes: </strong><br><br>
+
+
+    <strong>1: Try your best to avoid typo or grammar errors. Statements with too many typos or grammar errors will be rejected.</strong><br><br>
+
+    <strong>2: Your statements should be natural, fluent and coherent with the context of the table, based on deep understanding of the table and its title. Do not just use a rigid template utterance pattern and fill in table records (For example, if you just use the template "the only xxx is xxx" across all your examples, they will be rejected.) You should first go through the wikipedia page to know what the table is talking about, then compose natural and diversified statements based on deep understanding of the table context. </strong><br><br>
+
+    <strong>3: The length of your statement should be at least 10 words. Please include the information from table title to make your statement more comprehensive and self-contained</strong><br><br>
+</p>
+
+
+</div>
+</div>
+
+<div class="row" id="workContent">
+<div class="col-sm-12 col-sm-offset-0">
+<div class="panel panel-default" style="width: 100%;">
+    
+<div class="panel-heading">
+    Your statement should be at least 10 words long. If it's impossible to compose such a statement based on the given table, just write 'n/a' and pass<br><br>
+</div>
+
+<div class="panel-body">
+Table Source: <a href=${wiki1}>${topic1}</a><br>
+Table title: ${topic1}
+<div id="url1">${url1}</div><br>
+<br>
+  <p>Compose uniqueness statement on a subset of table rows </p>
+    <textarea name="sent" class="form-control" rows="1" type="text" placeholder="write statement" required></textarea><br>
+    <br>
+</div>
+
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+jQuery.ajaxSetup({async:false});
+$(document).ready(function(){
+    var table_content = "";
+    var cur = $(`#url1`).text()
+    $.get(cur, function(data){
+        var nwe_data = CSV2Table(data);
+        table_content += nwe_data;
+    }, 'text').fail(function() {
+    });
+    $(`#url1`).html(table_content);
+    
+    $('a').each(function(i, val){
+    if(val.href.match(/wikipedia/g))
+        val.target="_blank";
+    else
+        val.href = "javascript:void(0)"
+    });
+
+    var tabtrigger = $('#collapseTrigger');
+    var tabcontent = $('#instructionBody');
+
+    $('.collapse-text').text('(Click to expand)');
+    tabtrigger.click(function(){
+      tabcontent.toggle();
+      var isVisible = tabcontent.is(':visible');
+      if(isVisible){
+        $('.collapse-text').text('(Click to collapse)');
+      }else{
+        $('.collapse-text').text('(Click to expand)');
+      }
+    });
+
+});
+    
+function CSV2Table(data) {
+    var lines = data.split("\n");
+    lines.pop();
+    //var headers = lines[0].split(separator);
+    var output = []
+
+    var column = "<tr><td id=\"HEADER\"></td>"
+    for (i = 0; i < lines[0].slice(0,-1).split("#").length; i++){
+      this_i = i + 1
+      column += "<td id=\"HEADER\">" + this_i + "</td>";
+    }
+    column += "</tr>"
+    output.push(column);
+
+    for (i = 0; i < lines.length; i++){
+        //var fields = lines[i].split("#");
+        // add padding
+        if(i == 0){
+            output.push("<tr><td id=\"HEADER\"></td><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        }
+        else{
+            output.push("<tr><td id=\"HEADER\">" + i + "</td><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+        }
+        // if(i == 0){
+        //     output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+        // }
+        // else{
+        //     output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");            
+        // }
+    }
+    output = "<table class='wikitable'>" + output.join("") + "</table>";
+    return output
+}
+</script>
+
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" integrity="sha384-IS73LIqjtYesmURkDE9MXKbXqYA8rvKEp/ghicjem7Vc3mGRdQRptJSz60tvrB6+" rel="stylesheet" />
+<style type="text/css">#collapseTrigger{ color:#fff; display: block; text-decoration: none; } #submitButton{ white-space: normal; } .image{ margin-bottom: 15px; }
+</style>
+        <style>
+            table, tr {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: lightyellow;
+                font-size: smaller;
+            }
+
+            td#HEADER  {background-color: lightblue;}
+
+            th {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                font-size: smaller;
+            }
+            td {
+                border: 1px solid black;
+                padding: 5px;
+                color: black;
+                font-family: verdana;
+                background-color: #F7F8FA;
+                font-size: smaller;
+            }
+            .panel {
+                display: inline-block;
+                background: white;
+            }
+            p {
+              display: block;
+              margin-top: 0em;
+              margin-bottom: 1em;
+              margin-left: 1em;
+              margin-right: 1em;
+            }
+</style>
